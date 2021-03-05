@@ -4,7 +4,7 @@ template <class T>
 struct TLink
 {
 	T val;
-	TLink* pNext;
+	TLink<T>* pNext;
 };
 
 template <class T>
@@ -15,14 +15,14 @@ protected:
 	int size, pos;
 public:
 	TList() {
-		pStop = NULL;
+		pStop = nullptr;
 		pFirst = pLast = pCurr = pPrev = pStop;
 		size = pos = 0;
 	}
 	~TList() {
 		pCurr = pLast;
 		while (pCurr) {
-			tmp = pCurr;
+			TLink<T>* tmp = pCurr;
 			pCurr = pPrev;
 			tmp = pStop;
 		}
@@ -59,10 +59,10 @@ public:
 			if (size > 1) {
 				TLink<T>* tmp = pFirst;
 				pFirst = pFirst->pNext;
-				tmp = NULL;
+				tmp = nullptr;
 			}
 			else {
-				pFirst = NULL;
+				pFirst = nullptr;
 			}
 			size--;
 		}
@@ -78,7 +78,34 @@ public:
 		}
 		TLink<T>* tmp = pCurr;
 		pPrev->pNext = pCurr->pNext;
-
+		pCurr = pCurr->pNext;
+		delete tmp;
+		size--;
 	}
+
+	void InsCurr(T elem) {
+		if (pCurr == pStop)
+			InsLast(elem);
+		else if (pCurr == pFirst)
+			InsFirst();
+		else {
+			TLink<T>* tmp = new TLink<T>;
+			tmp->pNext = pCurr;
+			tmp->pPrev = pPrev;
+			pPrev->pNext = tmp;
+			pPrev = tmp;
+			tmp->val = elem;
+			size++;
+		}
+	}
+
+	T GetCurr() { return pCurr->val; }
+	void SetCurr(T elem) { pCurr->val = elem; }
+	void Reset() { pCurr = pFirst; }
+	void GoNext() {
+		pPrev = pCurr;
+		pCurr = pCurr->pNext;
+	}
+	bool IsEnd() { pCurr == pStop; }
 };
 

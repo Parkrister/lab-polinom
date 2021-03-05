@@ -15,15 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="polinom.cpp">
+    <ClCompile Include="TList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TList.cpp">
+    <ClCompile Include="TPolinom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="THeadList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TPolinom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="THeadList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
