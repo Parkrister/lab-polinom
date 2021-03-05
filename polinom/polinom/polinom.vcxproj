@@ -140,9 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="THeadList.cpp" />
-    <ClCompile Include="TList.cpp" />
-    <ClCompile Include="TPolinom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="THeadList.h" />

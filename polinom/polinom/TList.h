@@ -15,7 +15,7 @@ protected:
 	int size, pos;
 public:
 	TList() {
-		pStop = nullptr;
+		pStop = NULL;
 		pFirst = pLast = pCurr = pPrev = pStop;
 		size = pos = 0;
 	}
@@ -40,6 +40,7 @@ public:
 			pFirst->val = elem;
 			pLast = pFirst;
 		}
+		pCurr = pFirst;
 	}
 
 	void InsLast(T elem) {
@@ -52,6 +53,7 @@ public:
 		else {
 			InsFirst(elem);
 		}
+		pCurr = pLast;
 	}
 
 	void DelFirst() {
@@ -59,10 +61,10 @@ public:
 			if (size > 1) {
 				TLink<T>* tmp = pFirst;
 				pFirst = pFirst->pNext;
-				tmp = nullptr;
+				tmp = NULL;
 			}
 			else {
-				pFirst = nullptr;
+				pFirst = NULL;
 			}
 			size--;
 		}
@@ -99,7 +101,12 @@ public:
 		}
 	}
 
-	T GetCurr() { return pCurr->val; }
+	T GetCurr() {
+		if (pCurr == pStop)
+			throw 0;
+		else
+			return pCurr->val;
+	}
 	void SetCurr(T elem) { pCurr->val = elem; }
 	void Reset() { pCurr = pFirst; }
 	void GoNext() {
@@ -107,5 +114,16 @@ public:
 		pCurr = pCurr->pNext;
 	}
 	bool IsEnd() { pCurr == pStop; }
+	int GetSize() { return size; }
+
+	void Print() {
+		pCurr = pFirst;
+		while (pCurr != pStop)
+		{
+			std::cout << GetCurr() << ' ';
+			pCurr = pCurr->pNext;
+		}
+		putchar('\n');
+	}
 };
 
