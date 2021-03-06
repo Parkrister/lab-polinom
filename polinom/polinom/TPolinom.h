@@ -1,23 +1,56 @@
 #pragma once
 #include "THeadList.h"
 
-template <class T>
-struct TMonom {
-	double coeff;
-	int x, y, z;
-	friend bool operator<(const TMonom& m1, TMonom& m2);
-
-};
-
-template <class T>
-bool operator<(const TMonom<T>& m1, TMonom<T>& m2) {
-	return (m1.x * 100 + m1.y * 10 + m1.z) < (m2.x * 100 + m2.y * 10 + m2.z);
-}
 
 
-template <class T>
-class TPolinom: public THeadList<TMonom<T>>
+class TPolinom: private THeadList<TMonom>
 {
+	TLink<TMonom>* pFirst, * pLast, * pCurr, * pPrev, * pStop;
+	TLink<TMonom>* pHead;
+public:
+	TPolinom() : THeadList<TMonom>() {
+		pHead->val.x = 0;
+		pHead->val.y = 0;
+		pHead->val.z = 0;
+		pHead->val.coeff = 0;
+	}
+	void InsMonom(TMonom& m) {
+		for (Reset(); !IsEnd(); GoNext()) {
+			if (pCurr->val < m) {
+				InsCurr(m);
+				break;
+			}
+			if (pCurr->val == m) {
+				if (m.coeff - pCurr->val.coeff == 0)
+					DelCurr();
+				else
+					pCurr->val.coeff += m.coeff;
+				break;
+			}
+		}
+		if (IsEnd())
+			InsLast(m);
+	}
+	
+	//void operator+= (TPolinom& Q) {
+	//	for(Q.Reset(); !Q.IsEnd(); Q.GoNext()) {
+	//		this->InsMonom(Q.GetCurr());
+	//	}
+	//}
 
+	TPolinom& operator=(TPolinom& Q) {
+		if (this == &Q)
+			return;
+		while (pFirst != pStop)
+		{
+			DelFirst();
+		}
+		for (Q.Reset(); !Q.IsEnd(); Q.GoNext())
+			this->InsLast(Q.GetCurr());
+		return *this;
+	}
+	void operator+=(TPolinom& Q) {
+
+	}
 };
 

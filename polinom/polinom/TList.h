@@ -7,6 +7,8 @@ struct TLink
 	TLink<T>* pNext;
 };
 
+
+
 template <class T>
 class TList
 {
@@ -38,9 +40,9 @@ public:
 		else {
 			pFirst = new TLink<T>;
 			pFirst->val = elem;
+			pFirst->pNext = pStop;
 			pLast = pFirst;
 		}
-		pCurr = pFirst;
 	}
 
 	void InsLast(T elem) {
@@ -53,7 +55,6 @@ public:
 		else {
 			InsFirst(elem);
 		}
-		pCurr = pLast;
 	}
 
 	void DelFirst() {
@@ -64,7 +65,7 @@ public:
 				tmp = NULL;
 			}
 			else {
-				pFirst = NULL;
+				pFirst = pStop;
 			}
 			size--;
 		}
@@ -89,11 +90,10 @@ public:
 		if (pCurr == pStop)
 			InsLast(elem);
 		else if (pCurr == pFirst)
-			InsFirst();
+			InsFirst(elem);
 		else {
 			TLink<T>* tmp = new TLink<T>;
 			tmp->pNext = pCurr;
-			tmp->pPrev = pPrev;
 			pPrev->pNext = tmp;
 			pPrev = tmp;
 			tmp->val = elem;
@@ -107,6 +107,7 @@ public:
 		else
 			return pCurr->val;
 	}
+
 	void SetCurr(T elem) { pCurr->val = elem; }
 	void Reset() { pCurr = pFirst; }
 	void GoNext() {
@@ -117,13 +118,12 @@ public:
 	int GetSize() { return size; }
 
 	void Print() {
-		pCurr = pFirst;
-		while (pCurr != pStop)
+		TLink<T> *tmp  = pFirst;
+		while (tmp != pStop)
 		{
-			std::cout << GetCurr() << ' ';
-			pCurr = pCurr->pNext;
+			std::cout << tmp->val << ' ';
+			tmp = tmp->pNext;
 		}
-		putchar('\n');
 	}
 };
 
